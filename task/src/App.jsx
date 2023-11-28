@@ -10,29 +10,16 @@ function App() {
   return (
     <div className="App">
 
-      <nav>
-        <ul>
-          <li>
-            <Link to={'/'}>Home</Link>
-          </li>
-          <li>
-            <Link to={'/login'}>Login</Link>
-          </li>
-          <li>
-            <Link to={'/signup'}>Signup</Link>
-          </li>
-        </ul>
-      </nav>
 
-      
+      <BrowserRouter>
         <Routes>
-          <Route path="/Home" elemet={<Home/>} />
-          <Route path="/Login" elemet={<Login/>} />
-          <Route path="/Signup" elemet={<Signup/>} />
-          <Route path="/Logout" elemet={<Navigate to={'/login'} replace={true}/>} />
-          <Route path="*" elemet={<Navigate to='/pagenotfound' replace={true}/>} />
+          <Route path='/' element={<Home/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/logout" element={<Logout/>} />
+          <Route path="*" element={<PageNotFound/>}/>
         </Routes>
-    
+      </BrowserRouter>
 
 
     </div>
@@ -40,3 +27,19 @@ function App() {
 }
 
 export default App;
+
+
+
+// <nav>
+// <ul>
+//   <li>
+//     <Link to={'/'}>Home</Link>
+//   </li>
+//   <li>
+//     <Link to={'/login'}>Login</Link>
+//   </li>
+//   <li>
+//     <Link to={'/signup'}>Signup</Link>
+//   </li>
+// </ul>
+// </nav>

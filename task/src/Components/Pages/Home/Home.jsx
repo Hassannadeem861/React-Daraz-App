@@ -12,7 +12,7 @@ const Home = () => {
           Help & Support
         </span>
         <nav className="container">
-          <img src={Logo} alt="alt" width="120px" style="cursor: pointer;" />
+          <img src={Logo} alt="alt" width="120px" style={{cursor: 'pointer'}} />
 
           <input type="text" name="" id="search-box" className="search-box" placeholder="Enter Your Search" required
             minlength="2" maxlength="50" />
