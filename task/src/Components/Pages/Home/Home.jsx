@@ -1,11 +1,11 @@
-import React from 'react'
-import './Home.css'
-import Logo from '../../Assests/Daraz_logo_color.png'
+import React from "react";
+import "./Home.css";
+import Logo from "../../Assests/Daraz_logo_color.png";
 
 const Home = () => {
   return (
     <div>
-      <section className="section-container">
+      {/* <section className="section-container">
         <span className="span">
           Become a Seller
           Daraz Afiliate Program
@@ -33,9 +33,9 @@ const Home = () => {
             </ul>
           </div>
         </nav>
-      </section>
+      </section> */}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
