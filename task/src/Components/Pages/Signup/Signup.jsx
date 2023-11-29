@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect, Link } from "react";
+import React, { useRef } from "react";
+import swal from 'sweetalert';
 import "./Signup.css";
-// Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 import { initializeApp } from "firebase/app";
-import { Navigate } from "react-router-dom";
-import Login from '../Login/Login'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+
 
 const Signup = () => {
   const firstNameInputRef = useRef(null);
@@ -13,6 +12,7 @@ const Signup = () => {
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const repeatPasswordInputRef = useRef(null);
+  const buttonInputRef = useRef(null);
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
@@ -26,9 +26,74 @@ const Signup = () => {
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  // Initialize Firebase Authentication and get a reference to the service
+  const auth = getAuth();
+
+
+  // const button = document.getElementById("button")
+  // console.log(`ButtonValue ${button}`)
+
+  // button.addEventListener("onClick", (event) => {
+  //   event.preventDefault()
+  //   let firstName = document.querySelector("#firstName").value
+  //   let lastName = document.querySelector("#lastName").value
+  //   let email = document.querySelector("#email").value
+  //   let password = document.querySelector("#password").value
+  //   let repeatPassword = document.querySelector("#repeatPassword").value
+
+  //   // console.log(`FirstName ${firstName}`)
+  //   // console.log(`LastName ${lastName}`)
+  //   // console.log(`Email ${email}`)
+  //   // console.log(`Password ${password}`)
+  //   // console.log(`RepeatPassword ${repeatPassword}`)
+
+  // });
+
+  let register_btn = document.addEventListener('submit', function (e) {
+    console.log(`register_btn ${register_btn}`)
+    e.preventDefault();
+    // Your code here
+    let firstName = document.querySelector("#firstName")
+    let lastName = document.querySelector("#lastName")
+    let email = document.querySelector("#email")
+    let password = document.querySelector("#password")
+    let repeatPassword = document.querySelector("#repeatPassword")
+
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+
+        console.log("User: ", user)
+        swal("Good job!", "Signup Successfull");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log("Error: ", error);
+      });
+
+    console.log("FirstName: ", firstName)
+    console.log(`LastName ${lastName}`)
+    console.log(`Email ${email}`)
+    console.log(`Password ${password}`)
+    console.log(`RepeatPassword ${repeatPassword}`)
+
+  });
+
+
+
+
+
+
+
+
+
+
 
   return (
-    <div className="login form">
+    <div className="container">
       <header>Signup</header>
       <form id="signupForm">
         <input
@@ -55,7 +120,7 @@ const Signup = () => {
           ref={emailInputRef}
         />
         <input
-          type="text"
+          type="password"
           id="password"
           placeholder="Enter your password"
           ref={passwordInputRef}
@@ -69,7 +134,11 @@ const Signup = () => {
           autoComplete="new-password"
         />
         {/* <Link href="#">Forgot password?</Link> */}
-        <input type="submit" className="button" value="Signup" />
+        <button
+          // type="submit"
+          id="register_btn"
+          className="button"
+        >SIGNUP</button>
       </form>
 
       <div className="signup">
