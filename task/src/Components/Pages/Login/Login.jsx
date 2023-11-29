@@ -1,13 +1,11 @@
 import React, { useRef, Link } from "react";
 // import { Link } from "react-router-dom";
-import swal from 'sweetalert';
+import Swal from "sweetalert2";
 // import "./Login.css";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = (e) => {
-
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyCGPYlicL3qNESuZE93Famet2zvtIJZ0xg",
@@ -23,79 +21,66 @@ const Login = (e) => {
   // Initialize Firebase Authentication and get a reference to the service
   const auth = getAuth();
 
-
-  let register_btn = document.addEventListener('submit', function (e) {
-    console.log(`register_btn ${register_btn}`)
+  let login_btn = document.addEventListener("submit", function (e) {
     e.preventDefault();
+    console.log("login_btn: ", login_btn);
     // Your code here
-    let firstName = document.querySelector("#firstName")
-    let lastName = document.querySelector("#lastName")
-    let email = document.querySelector("#email")
-    let password = document.querySelector("#password")
-    let repeatPassword = document.querySelector("#repeatPassword")
+    let email = document.querySelector("#email");
+    let password = document.querySelector("#Password");
 
-    createUserWithEmailAndPassword(auth, email.value, password.value)
+    signInWithEmailAndPassword(auth, email.value, password.value)
       .then((userCredential) => {
-        // Signed up 
+        // Signed in
         const user = userCredential.user;
-
-        console.log("User: ", user)
-        swal("Good job!", "Signup Successfull");
+        Swal.fire({
+          title: "Login Successfull!",
+          // text: "Do you want to continue",
+          icon: "Successfull",
+          confirmButtonText: "Done",
+        });
+        console.log("Login Successfull: ", user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-
+        Swal.fire({
+          title: "Error!",
+          // text: "This email already exists",
+          icon: "Error",
+          confirmButtonText: "Cool",
+        });
         console.log("Error: ", error);
       });
 
-    console.log("FirstName: ", firstName)
-    console.log(`LastName ${lastName}`)
-    console.log(`Email ${email}`)
-    console.log(`Password ${password}`)
-    console.log(`RepeatPassword ${repeatPassword}`)
-
+    // console.log("Email: ", email);
+    // console.log("Password: ", password);
   });
 
-
-
-  // e.preventDefault()
-  const emailInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
-
   return (
-
-
-
-    <div className="container">
-
+    <div className="">
       <header>Login</header>
-
-
-      <form id="loginForm">
-        <input type="text" id="email" placeholder="Enter your email" />
-        <input type="password" id="password" placeholder="Enter your password" className="password" />
-        <a href="#">Forgot password?</a>
-        <input type="submit" className="button" value="Login" />
+      <form className="login_form">
+        <label htmlFor="">Login:</label>
+        <input
+          type="email"
+          id="email"
+          className="email"
+          autoComplete="email"
+          required
+        ></input>
+        <br />
+        <input
+          type="password"
+          id="Password"
+          className="Password"
+          required
+        ></input>
+        <br />
+        <button type="submit" id="login_btn" className="login_btn">
+          LOGIN
+        </button>
       </form>
-
-
-      <div classNameName="signup">
-        <span classNameName="signup">
-          Don't have an account?
-          <label htmlFor="check">
-            <a href="Signup">Signup</a>
-          </label>
-        </span>
-      </div>
-
-
-
     </div>
-
-
-
-
   );
 };
 

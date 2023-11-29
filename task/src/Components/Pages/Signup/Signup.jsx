@@ -1,18 +1,16 @@
 import React, { useRef } from "react";
-import swal from 'sweetalert';
+import Swal from "sweetalert2";
 import "./Signup.css";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-
-
 const Signup = () => {
-  const firstNameInputRef = useRef(null);
-  const lastNameInputRef = useRef(null);
-  const emailInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
-  const repeatPasswordInputRef = useRef(null);
-  const buttonInputRef = useRef(null);
+  // const firstNameInputRef = useRef(null);
+  // const lastNameInputRef = useRef(null);
+  // const emailInputRef = useRef(null);
+  // const passwordInputRef = useRef(null);
+  // const repeatPasswordInputRef = useRef(null);
+  // const buttonInputRef = useRef(null);
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
@@ -29,28 +27,8 @@ const Signup = () => {
   // Initialize Firebase Authentication and get a reference to the service
   const auth = getAuth();
 
-
-  // const button = document.getElementById("button")
-  // console.log(`ButtonValue ${button}`)
-
-  // button.addEventListener("onClick", (event) => {
-  //   event.preventDefault()
-  //   let firstName = document.querySelector("#firstName").value
-  //   let lastName = document.querySelector("#lastName").value
-  //   let email = document.querySelector("#email").value
-  //   let password = document.querySelector("#password").value
-  //   let repeatPassword = document.querySelector("#repeatPassword").value
-
-  //   // console.log(`FirstName ${firstName}`)
-  //   // console.log(`LastName ${lastName}`)
-  //   // console.log(`Email ${email}`)
-  //   // console.log(`Password ${password}`)
-  //   // console.log(`RepeatPassword ${repeatPassword}`)
-
-  // });
-
-  let register_btn = document.addEventListener('submit', function (e) {
-    console.log(`register_btn ${register_btn}`)
+  let register_btn = document.addEventListener("submit", function (e) {
+    console.log("register_btn: ", register_btn);
     e.preventDefault();
     // Your code here
     let firstName = document.querySelector("#firstName")
@@ -61,36 +39,37 @@ const Signup = () => {
 
     createUserWithEmailAndPassword(auth, email.value, password.value)
       .then((userCredential) => {
-        // Signed up 
+        // Signed up
         const user = userCredential.user;
-
-        console.log("User: ", user)
-        swal("Good job!", "Signup Successfull");
+        Swal.fire({
+          position: "top-end",
+          icon: "Success",
+          title: "Signup Successfull",
+          showConfirmButton: false,
+          timer: 15000,
+        });
+        console.log("User: ", user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
+        Swal.fire({
+          position: "top-end",
+          icon: "Error",
+          title: "InValid Email",
+          showConfirmButton: false,
+          timer: 15000,
+        });
         console.log("Error: ", error);
       });
 
-    console.log("FirstName: ", firstName)
-    console.log(`LastName ${lastName}`)
-    console.log(`Email ${email}`)
-    console.log(`Password ${password}`)
-    console.log(`RepeatPassword ${repeatPassword}`)
-
+    // console.log("FirstName: ", firstName);
+    // console.log("lastName: ", lastName);
+    // console.log("email: ", email);
+    // console.log("password: ", password);
+    // console.log("repeatPassword: ", repeatPassword);
   });
-
-
-
-
-
-
-
-
-
-
 
   return (
     <div className="container">
@@ -100,7 +79,7 @@ const Signup = () => {
           type="text"
           id="firstName"
           placeholder="Enter your First-Name"
-          ref={firstNameInputRef}
+          // ref={firstNameInputRef}
           autoComplete="given-name"
         />
 
@@ -109,7 +88,7 @@ const Signup = () => {
           id="lastName"
           placeholder="Enter your last-Name"
           autoComplete="family-name"
-          ref={lastNameInputRef}
+          // ref={lastNameInputRef}
         />
 
         <input
@@ -117,28 +96,30 @@ const Signup = () => {
           id="email"
           placeholder="Enter your email"
           autoComplete="email"
-          ref={emailInputRef}
+          // ref={emailInputRef}
         />
         <input
           type="password"
           id="password"
           placeholder="Enter your password"
-          ref={passwordInputRef}
+          // ref={passwordInputRef}
           autoComplete="new-password"
         />
         <input
           type="password"
           id="repeatPassword"
           placeholder="Enter your Repeat-Password"
-          ref={repeatPasswordInputRef}
+          // ref={repeatPasswordInputRef}
           autoComplete="new-password"
         />
         {/* <Link href="#">Forgot password?</Link> */}
         <button
-          // type="submit"
+          type="submit"
           id="register_btn"
           className="button"
-        >SIGNUP</button>
+        >
+          SIGNUP
+        </button>
       </form>
 
       <div className="signup">
